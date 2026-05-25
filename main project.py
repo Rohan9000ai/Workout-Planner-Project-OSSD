@@ -66,7 +66,7 @@ def sign_up():
 
 
 def login_window():
-    global email_entry,password_entry,name_entry
+    global email_entry,password_entry,name_entry,age_entry
     for widget in root.winfo_children():
         widget.destroy()
 
@@ -90,10 +90,10 @@ def login_window():
     password.grid(row=2,column=0,pady=5,padx=30)
     password_entry=tk.Entry(f1,font="arial 15",bg="light gray",borderwidth=4,show="*",width=31,justify="center")
     password_entry.grid(row=3,column=1,pady=5,padx=30)
-    name=tk.Label(f1,text="Name:",font="arial 11 bold",bg="white")
-    name.grid(row=4,column=0,pady=5,padx=30)
-    name_entry=tk.Entry(f1,font="arial 15",bg="light gray",borderwidth=4,width=30,justify="center")
-    name_entry.grid(row=5,column=1,pady=5,padx=30)
+    age=tk.Label(f1,text="Age:",font="arial 11 bold",bg="white")
+    age.grid(row=4,column=0,pady=5,padx=30)
+    age_entry=tk.Entry(f1,font="arial 15",bg="light gray",borderwidth=4,width=30,justify="center")
+    age_entry.grid(row=5,column=1,pady=5,padx=30)
     tk.Label(f1,text="",bg="white").grid(row=6,column=0,pady=5,padx=30)
 
 
@@ -149,20 +149,52 @@ def sign_up_window():
 
 
 def main_window():
-    global name_entry,currunt_height,currunt_weight,currunt_name
+    global name_entry,currunt_height,currunt_weight,currunt_name,age_entry
     n=currunt_name
     h=currunt_height
     w=currunt_weight
+    ag=age_entry.get()
     for widgets in root.winfo_children():
         widgets.destroy()
 
     root.title("main window")
-    out=tk.Button(root,text="Logout",font="arial 10",bg="dark blue",fg="white",width=30,pady=5,command=login_window)
-    out.grid(row=0,column=10)
-    feed=tk.Button(root,text="Feedback",font="arial 10",bg="dark blue",fg="white",width=30,pady=5,command=feedback_window)
-    feed.grid(row=0,column=9)
-    tk.Label(root,text=f"welcome {n}",font="arial 12",bg="light blue",fg="black",width=24,pady=7).grid(row=0,column=0,pady=10)
+    root.maxsize(900, 600)
+    f=tk.Frame(root,width=400,height=20,bg="light gray")
+    f.pack(fill=tk.BOTH,side=tk.TOP)
+    out=tk.Button(f,text="Logout",font="arial 10",bg="light gray",fg="red",width=10,pady=5,command=login_window)
+    out.pack(side=tk.RIGHT,padx=5)
+    feed=tk.Button(f,text="Feedback",font="arial 10",bg="light gray",fg="black",width=10,pady=5,command=feedback_window)
+    feed.pack(side=tk.RIGHT,padx=5)
+    f1=tk.Frame(root,width=700,height=300,bg="white",borderwidth=3,relief="groove")
+    f1.pack(fill=tk.BOTH)
+    tk.Label(f1,text=f"hey {n}",font="arial 20 bold",bg="white",fg="black",width=24,pady=7).pack(pady=10)
+
+    f2=tk.Frame(f1,width=100,height=30,bg="light gray")
+    f2.pack(pady=7,side=tk.LEFT,padx=10)
+    tk.Label(f2,text="Height:",font="arial 8",bg="light gray",fg="black",width=70,pady=5).grid(row=0,column=0)
+    tk.Label(f2,text=f"{h} cm",font="arial 15",bg="light gray",fg="black").grid(row=1,column=0)
+
+    f3=tk.Frame(f1,width=100,height=30,bg="light gray")
+    f3.pack(pady=7,side=tk.LEFT,padx=20)
+    tk.Label(f3,text="Weight:",font="arial 8",bg="light gray",fg="black",width=70,pady=5).grid(row=0,column=0)
+    tk.Label(f3,text=f"{w} kg",font="arial 15",bg="light gray",fg="black").grid(row=1,column=0)
     
+    f4=tk.Frame(root,width=100,height=30,bg="white",borderwidth=3,relief="groove")
+    f4.pack(fill=tk.BOTH)
+    f5=tk.Frame(f4,width=100,height=30,bg="light gray")
+    f5.pack(pady=7,padx=10)
+    tk.Label(f5,text="Age:",font="arial 8",bg="light gray",fg="black",width=170,pady=5,justify="center").grid(row=0,column=0)
+    tk.Label(f5,text=f"{ag}",font="arial 15",bg="light gray",fg="black").grid(row=1,column=0)
+
+    #add scrapped data here
+
+    f6=tk.Frame(root,width=100,height=50,bg="white",borderwidth=3,relief="groove")
+    f6.pack(fill=tk.BOTH,side=tk.BOTTOM)
+    fat_lose=tk.Button(f6,text="Fat Loss",font="arial 10",bg="light blue",fg="dark blue",width=50,pady=50,command=fat_loss_window)
+    fat_lose.pack(pady=10,side=tk.LEFT,padx=30)
+    muscle_gain=tk.Button(f6,text="Muscle Gain",font="arial 10",bg="light green",fg="dark green",width=50,pady=50,command=muscle_gain_window)
+    muscle_gain.pack(pady=10,side=tk.LEFT,padx=30)
+
 
     
 
@@ -170,14 +202,19 @@ def main_window():
 def feedback_window():
     pass
 
+def fat_loss_window():
+    pass
+
+def muscle_gain_window():
+    pass
+
 
 
 
 root=tk.Tk()
-root.geometry("400x570")
+root.geometry("700x700")
 root.maxsize(700,700)
 root.title("Sign Up Form")
 sign_up_window()
-
 
 root.mainloop()   
