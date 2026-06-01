@@ -202,7 +202,10 @@ def feedback_window():
     pass
 
 def fat_loss_window():
-    pass
+    for widgets in root.winfo_children():
+        widgets.destroy()
+    root.title("Fat loss window")
+    root.maxsize(900, 600)
 
 def muscle_gain_window():
     for widgets in root.winfo_children():
