@@ -18,6 +18,11 @@ cursor.execute(create_table)
 conn.commit()
 conn.close()
 
+root=tk.Tk()
+root.geometry("700x700")
+root.maxsize(700,700)
+root.title("Sign Up Form")
+
 def login():
     global email_entry,password_entry,currunt_height,currunt_weight,currunt_name,currunt_age,age_entry
     e=email_entry.get()
@@ -149,6 +154,8 @@ def sign_up_window():
     not_account.grid(row=9,pady=10,padx=50,columnspan=2)
 
 
+
+
 def main_window():
     global name_entry,currunt_height,currunt_weight,currunt_name,age_entry,currunt_age
     n=currunt_name
@@ -199,13 +206,175 @@ def main_window():
 
 
 def feedback_window():
-    pass
+    for widgets in root.winfo_children():
+         widgets.destroy()
+    root.title("Give your Feedback")
+    root.maxsize(900,600)
+    f1 = tk.Frame(root, width=600, height=400, bg="white")
+    f1.pack(fill=tk.BOTH, expand=True)
+    header = tk.Frame(f1, bg="#1a1a6e", width=600)
+    header.pack(fill=tk.X)
+    label1 = tk.Label(header, text=" Feedback", font=("Arial", 16, "bold"), bg="#1a1a6e", fg="white")
+    label1.pack(pady=18)
+    sub = tk.Label(header, text="give your nobal thoughts!", font=("Arial", 9), bg="#1a1a6e", fg="#a0a8d0")
+    sub.pack(pady=(0, 15))
+    inner = tk.Frame(f1, bg="white")
+    inner.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+    tk.Label(inner, text="Category", font=("Arial", 9, "bold"), bg="white", fg="#555").grid(row=0, column=0, sticky="w", pady=(5,2))
+    dropdown = tk.StringVar(value="General Feedback")
+    menu = tk.OptionMenu(inner, dropdown, "General Feedback", "Bug Report", "Feature Request", "Other")
+    menu.config(font=("Arial", 10), bg="white", width=30)
+    menu.grid(row=1, column=0, sticky="w", pady=(0, 8))
+    tk.Label(inner, text="Rating", font=("Arial", 9, "bold"), bg="white", fg="#555").grid(row=2, column=0, sticky="w", pady=(5,2))
+    rating_frame = tk.Frame(inner, bg="white")
+    rating_frame.grid(row=3, column=0, sticky="w")
+    selected_rating = tk.IntVar(value=0)
+    for i in range(1, 6):
+        rb = tk.Radiobutton(rating_frame, text=str(i), variable=selected_rating, value=i,
+                            font=("Arial", 10), bg="white", fg="#1a1a6e", selectcolor="#e8e8ff")
+        rb.pack(side=tk.LEFT, padx=5)
+
+    # Message
+    tk.Label(inner, text="Message", font=("Arial", 9, "bold"), bg="white", fg="#555").grid(row=4, column=0, stick ="w", pady=(8,2))
+
+    msg_entry = tk.Text(inner, font=("Arial", 10), width=42, height=4, bd=2, relief="solid")
+    msg_entry.insert("1.0", "Write your feedback here...")
+    msg_entry.config(fg="gray")
+    msg_entry.grid(row=5, column=0, pady=(0, 15))
+    def on_click(event):
+        if msg_entry.get("1.0","end-1c") == "Write your feedback here...":
+            msg_entry.delete("1.0","end-1c")
+            msg_entry.config(fg="black")
+
+    def foucus_on(event):
+        if msg_entry.get("1.0","end-1c") == "":
+            msg_entry.insert("wirte your feedback here...")
+            msg_entry.config(fg="grey")
+    msg_entry.bind("<FocusIn>", on_click)
+    msg_entry.bind("<FocusOut>", foucus_on)
+
+    def submitt():
+        tk.messagebox.showinfo("submit", "submit successfuly")
+        
+    submit = tk.Button(inner, text=" Submit Feedback", font=("Arial", 11, "bold"),
+                    bg="#1a1a6e", fg="white",command=submitt ,width=40, pady=7, cursor="hand2" , justify="center")
+   
+
+    submit.grid(row=6, column=0, pady=20,padx=20)
+
 
 def fat_loss_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Fat loss window")
     root.maxsize(900, 600)
+    frame1 = tk.Frame(root,width=400, height=400 , bg="white" , bd=1)
+    frame1.pack(fill=tk.BOTH, expand=True)
+
+    label1 = tk.Label(frame1, text="Fat Loss-gym_workout_planner", font=("Arial",14,"bold") , width=400)
+    label1.pack(pady=5,padx=5)
+    label2= tk.Label(frame1,text="Today's session:", font=("Arial",11,"bold"), bg="white")
+    label2.pack(pady=(10,4),padx=20, anchor="w")
+
+    par_label=tk.Frame(frame1,width=400,bg="white")
+    par_label.pack(fill=tk.X, padx=10,pady=10)
+    for i in range(3):
+        par_label.columnconfigure(i,weight=1)
+
+    item =[
+        ("calories", "310kcal"),
+        ("Duration","22min"),
+        ("Exersice","4done")
+    ]    
+    for col,(title,value) in enumerate(item):
+        sub_frame=tk.Frame(par_label,bg="#e0e0e0",relief=tk.RIDGE,bd=1)
+        sub_frame.grid(pady=5,padx=5,row=0,column=col,sticky="nsew")
+
+        tk.Label(sub_frame,text=title,bg="#e0e0e0",font=("Arial",11,"bold")).pack(pady=(5,0))
+        tk.Label(sub_frame,text=value,bg="#e0e0e0",font=("Arial",11,"bold")).pack(pady=(0,5))
+                                                                                
+    label3=tk.Label(frame1,text="Exerscises and counters:" , font=("Arial",11,"bold"), bg="white").pack(
+        pady=5,padx=20, anchor="w")
+
+
+
+    canvas = tk.Canvas(frame1,bg="white", highlightthickness=0)
+    scrollbar = tk.Scrollbar(frame1, orient="vertical" , command=canvas.yview)
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    scrollbar.pack(side="right",fill="y")
+    canvas.pack(side="left", fill="both",expand=True , pady=0, padx=0)
+
+    scroll_frame = tk.Frame(canvas,bg="white")
+    window = canvas.create_window((0,0),window=scroll_frame,anchor="nw")
+
+    def on_canvas_resize(event):
+        canvas.itemconfig(window,width=event.width)
+    canvas.bind("<Configure>", on_canvas_resize)
+
+    def on_frame_resize(event):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+    scroll_frame.bind("<Configure>", on_frame_resize)
+
+    def rotate(event):
+        canvas.yview_scroll(int(-1* (event.delta/120)), "units")
+    canvas.bind_all("<MouseWheel>",rotate) 
+        
+
+
+    Exercises = [
+        {"name": "Crunchers",      "type":"Reps",  "val": 24,   "timer":  False},
+        {"name": "Jumping jacks",   "type": "Reps",  "val": 40,   "timer": False},
+        {"name":  "Burpees",        "type":"Reps",   "val":15,    "timer": False},
+        {"name":  "High knees",      "type":"Reps",   "val":30,    "timer": False},
+        {"name":   "Plank",          "type": "Reps",   "val":90,   "timer": True},
+        {"name":   "Mountain Climbers", "type":"Reps",  "val":20,   "timer":False},
+    ]
+    total ={}
+
+    for ex in Exercises:
+        row = tk.Frame(scroll_frame, bg="#ebe7de")
+        row.pack(fill="x", pady=3,padx=14)
+
+        sub_row=tk.Frame(row,bg="#ebe7de")
+        sub_row.pack(pady=10,padx=13,side="left")
+
+        tk.Label(sub_row, text=ex["name"], font=("Arial", 11,"bold"),bg="#ebe7de").pack(anchor="w")
+        tk.Label(sub_row,text=ex["type"],font=("Arial",11,"bold"),bg="#ebe7de").pack(anchor="w")
+
+        if ex["timer"]:
+            frame4 = tk.Frame(row,bg="#e0e0e0")
+            frame4.pack(side="right",pady=12,padx=15)
+
+            btn = tk.Button(frame4, text="start", font = ("Arial", 9, "bold"), bg="green", fg="white")
+            btn.pack(pady=4, padx=6, side= "left")
+
+            btn1 = tk.Button(frame4, text="stop", font=("Arial", 9 ,"bold"), bg="blue", fg="white")
+            btn1.pack(padx=6, pady=4, side="right")
+        else:
+            var = tk.IntVar(value=ex["val"])
+            total[ex["name"]]=var
+            frame5 = tk.Frame(row,bg="blue")
+            frame5.pack(pady=10,padx=15 , side="right")
+
+            btn2 = tk.Button(frame5,text="-", font=("Arial", 14,"bold"),bg="green",fg="white" , cursor="hand2"
+                                ,command=lambda x=var: x.set(max(0,x.get()-1)))
+            btn2.pack(side="left")
+
+            tk.Label(frame5,textvariable=var,bg="#e0e0e0",fg="black", anchor="center",
+                        font=("Arial", 14,"bold")).pack(side="left")
+            btn3= tk.Button(frame5,text="+", font=("Arial",14,"bold"),bg="green",fg="white",
+                            command=lambda x=var: x.set(x.get()+1))
+            btn3.pack(pady=4,padx=4,side="right")
+        def submit():
+            tk.messagebox.showinfo( "submit","okay submitted")
+
+    button= tk.Button(scroll_frame, text="submit", font=("Arial", 11, "bold"),command=submit ,relief="flat",width=20,  bg="green", fg="white")
+    button.pack(pady=15) 
+
+
+        
+        
 
 def muscle_gain_window():
     for widgets in root.winfo_children():
@@ -307,10 +476,7 @@ def legs_window():
 
 
 
-root=tk.Tk()
-root.geometry("700x700")
-root.maxsize(700,700)
-root.title("Sign Up Form")
+
 sign_up_window()
 
 root.mainloop()   
