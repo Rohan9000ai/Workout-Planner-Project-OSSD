@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from PIL import Image, ImageTk
 import sqlite3
 
 conn=sqlite3.connect("user.db")
@@ -78,8 +79,12 @@ def login_window():
 
     f=tk.Frame(root,width=600,height=600,bg="dark blue")
     f.pack(fill=tk.BOTH)
-    img=tk.Label(f,text="Image",font="arial 20 bold",bg="dark blue",fg="white")
-    img.pack(pady=40)
+    opened_img = Image.open("dumbell.png")
+    resized=opened_img.resize((120,90))
+    photo = ImageTk.PhotoImage(resized)
+    img=tk.Label(f,image=photo,font="arial 20 bold",bg="dark blue",fg="white")
+    img.image = photo
+    img.pack(pady=10)
     create=tk.Label(f,text="Welcome Back",font="arial 20 bold",bg="dark blue",fg="white")
     create.pack()
     des=tk.Label(f,text="Login to countinue your journey",font="arial 10",bg="dark blue",fg="white")
@@ -116,12 +121,16 @@ def sign_up_window():
 
     f=tk.Frame(root,width=600,height=600,bg="dark blue")
     f.pack(fill=tk.BOTH)
-    img=tk.Label(f,text="Image",font="arial 20 bold",bg="dark blue",fg="white")
-    img.pack(pady=40)
+    opened_img = Image.open("dumbell.png")
+    resized=opened_img.resize((120,90))
+    photo = ImageTk.PhotoImage(resized)
+    img=tk.Label(f,image=photo,font="arial 20 bold",bg="dark blue",fg="white")
+    img.image = photo
+    img.pack(pady=7)
     create=tk.Label(f,text="Create Account",font="arial 20 bold",bg="dark blue",fg="white")
     create.pack()
     des=tk.Label(f,text="Start your fitness journey today",font="arial 10",bg="dark blue",fg="white")
-    des.pack(pady=10)
+    des.pack(pady=7)
     f1=tk.Frame(root,width=400,height=480,bg="white")
     f1.pack(fill=tk.BOTH)
 
@@ -385,15 +394,22 @@ def muscle_gain_window():
     f.pack(fill=tk.BOTH,side=tk.TOP)
     back_btn=tk.Button(f,text="<-- back to main menu",font="arial 10 bold",bg="dark blue",fg="white",command=main_window,pady=10)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                                  ").pack(side=tk.LEFT,padx=20)
     tk.Label(f,text="Strength Training",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=10)
     f1=tk.Frame(root,width=700,height=300,bg="white")
     f1.pack(fill=tk.BOTH,expand=True)
     title_frame=tk.Frame(f1,width=100,height=100,bg="lightblue1",borderwidth=2,pady=40)
     title_frame.pack(side=tk.TOP,fill=tk.BOTH)
-    #add icon here 
-    tk.Label(title_frame,text="Choose your muscle group\nSelect a muscle - we'll show you the best exercises for it!",font="arial 13",bg="lightblue1",fg="blue4",justify="left").pack(pady=5,padx=30,anchor="nw")
+    img_data = Image.open("dumbell.png")
+    resized = img_data.resize((80, 80))
+    photo = ImageTk.PhotoImage(resized)
+    img_label = tk.Label(title_frame, image=photo, bg="lightblue1")
+    img_label.image = photo
+    img_label.pack(side=tk.LEFT, padx=20, pady=7)
+    text_label = tk.Label(title_frame,text="Choose your muscle group\nSelect a muscle - we'll show you the best exercises for it!",font="arial 13",bg="lightblue1",fg="blue4",justify="left")
+    text_label.pack(side=tk.LEFT, pady=5, padx=10, anchor="w")
     main_frame=tk.Frame(f1,width=700,height=500,bg="white")
-    main_frame.pack(side=tk.TOP,fill=tk.BOTH,expand=True,padx=20,pady=15)
+    main_frame.pack(side=tk.TOP,fill=tk.BOTH,expand=True,padx=20,pady=10)
     tk.Label(main_frame,text="Select Muscle Group",font="arial 11 bold",bg="white",fg="black").grid(row=0,column=0,pady=10,padx=20,sticky="w")
 
     chest_btn=tk.Button(main_frame,text="chest",font="arial 10",bg="light gray",fg="black",width=30,pady=40,command=chest_window)
@@ -422,59 +438,538 @@ def chest_window():
         widgets.destroy()
     root.title("Chest muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Chest Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("completechest.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="Chest Dips\n\n3 sets- 10-15 reps .bodyweight\n targets complete chest but mainly trains upper chest and also trains the triceps muscles little bit",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("lowerchest.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="Decline Dumbell Press\n\n3 sets- 10-12 reps Heavy weight\n Mainly targets lower chest and specially helps to gives the round shape to chest",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("upperchest.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="Incline Dumbell Press\n\n3 sets- 10-12 reps Heavy weight\n Mainly targets upper chest but also trains triceps muscle ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("midline_chest.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="cable cross over\n\n3 sets- 10-12 reps Moderate weight\n targets inner chest give a 3D shape best if you have a chest muscle gap ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
+
+
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("upperchest.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
+
+    text5=tk.Label(f5,text="Incline Dumbell Fly\n\n3 sets- 10-12 reps Moderate weight\n Mainly targets upper chest and also trains little bit of the front deltoids of shoulders ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("completechest.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="Chest Fly\n\n3 sets- 10-12 reps Moderate weight\n targets complete chest and helps to give rounded shape to chest little bit trains the triceps also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
+
+
 def back_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Back muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Back Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("butterfly.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="double pully lats pull down\n\n3 sets- 10-15 reps .weighted\n targets butterfly area of back and traps also if trains properly",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("lowerlats.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="reverse grip lat pulldown\n\n3 sets- 10-12 reps Heavy weight\n targets lower lats of back and also trains biceps and little bit effect forarms also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("pullups.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="Pull-ups\n\n3 sets- 10-12 reps .bodyweight\n targets all-back muscles but mainly targets the upperlats of back little bit biceps also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("tree.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="back extension\n\n3 sets- 10-12 reps Moderate weight\n targets lower back (tree area),that is very necessary for deadlifs and heavy training",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
+
+
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("upperlats.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
+
+    text5=tk.Label(f5,text="dumbbell rowing\n\n3 sets- 10-12 reps Heavy weight\n targets upper-lats of back but also trains the rhomboids and lower lats of back ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("upperlats.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="wide grip lat pulldown \n\n3 sets- 10-12 reps Heavy weight\n Mainly targets upper lats of back but also trains the traps and middle back ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
+
 def abs_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Abs muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Abs Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+
+    #changes from here
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("fullabs.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="Full Abdominal Crunch\n\n3 sets- 10-15 reps .bodyweight\n targets complete abs upper,middle,lower all trains by this exercise but less effective ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("lowerabs.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="Lower Abdominal Crunch\n\n3 sets- 10-12 reps .bodyweight\n Mainly targets lower abdominal muscle that difficult to train but this exercise is very effective for this ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("sideabs.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="twister\n\n3 set till max\n Mainly targets love handels of abdominal muscle it is also a best exercise for fatlose",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("upperabs.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="cable supported crunches\n\n3 sets- 10-12 reps .modrate weight\n Mainly targets upper abs and it gives burn to lower abs also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
+
+
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("fullabs.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
+
+    text5=tk.Label(f5,text="Plank\n\n1 set till failure\n target full abs try to give your maximum and do it at the end of your abs workout its double your abs workout",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("lowerabs.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="hanging legs raises\n\n3 sets- 10-12 reps Body weight\n Mainly targets lower abs by handing on a pull-up bar raises your legs it burns yours abdominal muscles",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
+
 def arms_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Arms muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Arms Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+
+    #changes from here
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("bicep.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="rod curls\n\n3 sets- 10-15 reps .heavy weight\n targets complete biceps but its mainly covers short head of bicep but good for whole bicep pump ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("longhead.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="incline dumbell curl\n\n3 sets- 10-12 reps Heavy weight\n Mainly targets long head of bicep that is mainly visible in looks and better for biceps development",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("shorthead.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="standing dumbell curl\n\n3 sets- 10-12 reps Heavy weight\n Mainly targets short head of bicep you can also uses ez bar for curls if dubells are not comfortable",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("tricep.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="tricep push down\n\n3 sets- 10-12 reps Moderate weight\n Mainly targets short head of tricep best for cuts and definition to complete tricep muscle ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
+
+
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("tricep2.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
+
+    text5=tk.Label(f5,text="tricep pull over\n\n3 sets- 10-12 reps Moderate weight\n Mainly targets long head of tricep but also median head of tricep that muscle is mainly visible",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("medianhead.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="one hand tricep extension\n\n3 sets- 15-20 reps Moderate weight\n Mainly targets median head of tricep it helps to gives a better pump and defination to the muscle",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
+
 def shoulder_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Shoulder muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Shoulder Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+
+    #changes from here
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("frontdelt.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="Dumbell press\n\n3 sets- 10-15 reps .heavy weight\n mainly focus on front deltoids in this bench at 60% then this exercise will be more effective then normally",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("raredeelts.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="face pull over\n\n3 sets- 15-20 reps Moderate weight\n Mainly targets rare deltoids but also helps in developingthe traps and rhomboids muscles",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("shoulder.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="machine shoulder press\n\n3 sets- 10-12 reps Heavy weight\n Mainly targets upper deltoids of shoulder but also helps in developing the middle deltoids",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("sidedelts.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="dumbell raises\n\n3 sets- 10-12 reps Moderate weight\n targets side deltoids of shoulders ,you can also uses cable machine that gives more stabalization to this exercise ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
+
+
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("shoulder.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
+
+    text5=tk.Label(f5,text="Arnold Press\n\n3 sets- 10-12 reps Moderate weight\n Mainly targets complete shoulders but it is a combiination of three exercises that is best for complete shoulders",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("frontdelt.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="Front Deltoid Raises\n\n3 sets- 10-12 reps Moderate weight\n Mainly targets front deltoids but it helps to strengthen the entire shoulder and give it a round shape",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
+
 def legs_window():
     for widgets in root.winfo_children():
         widgets.destroy()
     root.title("Legs muscle")
     root.maxsize(900, 600)
-    f=tk.Frame(root,width=400,bg="white",pady=13)
+    f=tk.Frame(root,width=400,bg="white")
     f.pack(fill=tk.BOTH,side=tk.TOP)
-    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=10)
+    back_btn=tk.Button(f,text="<-- back to Select Muscles",font="arial 10 bold",bg="dark blue",fg="white",command=muscle_gain_window,pady=8)
     back_btn.pack(side=tk.LEFT,padx=10)
-    
+    tk.Label(f,bg="white",text="                                           ").pack(side=tk.LEFT,padx=20)
+    tk.Label(f,text="Best Legs Exercises",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=20)
+
+    #changes from here
+    main_frame=tk.Frame(root,width=700,height=500,bg="white")
+    main_frame.pack(fill=tk.BOTH,expand=True)
+
+    f1=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f1.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data1=Image.open("leg1.png")
+    resized1=image_data1.resize((70,70))
+    photo1=ImageTk.PhotoImage(resized1)
+    img_label1=tk.Label(f1,image=photo1,bg="light gray")
+    img_label1.image=photo1
+    img_label1.pack(side=tk.LEFT,padx=10)
+
+    text=tk.Label(f1,text="leg press\n\n3 sets- 10-15 reps .heavy weight\n targets complete leg muscles but not to completely streight your legs while doing this exercise ",font="arial 11",bg="light gray",fg="black",justify="left")
+    text.pack(side=tk.LEFT,padx=10)
+
+    f2=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f2.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data2=Image.open("legs2.png")
+    resized2=image_data2.resize((70,70))
+    photo2=ImageTk.PhotoImage(resized2)
+    img_label2=tk.Label(f2,image=photo2,bg="light gray")
+    img_label2.image=photo2
+    img_label2.pack(side=tk.LEFT,padx=10)
+
+    text2=tk.Label(f2,text="Leg Curls\n\n3 sets- 10-12 reps Heavy weight\n very affective exercise for gluits muscle of legs little bit tricky but very affective for legs",font="arial 11",bg="light gray",fg="black",justify="left")
+    text2.pack(side=tk.LEFT,padx=10)
+
+    f3=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f3.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data3=Image.open("leg3.png")
+    resized3=image_data3.resize((70,70))
+    photo3=ImageTk.PhotoImage(resized3)
+    img_label3=tk.Label(f3,image=photo3,bg="light gray")
+    img_label3.image=photo3
+    img_label3.pack(side=tk.LEFT,padx=10)
+
+    text3=tk.Label(f3,text="Leg Extensions\n\n3 sets- 10-12 reps Moderate weight\n completely dominating the legs muscle best exercise ever",font="arial 11",bg="light gray",fg="black",justify="left")
+    text3.pack(side=tk.LEFT,padx=10)
+
+    f4=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f4.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data4=Image.open("leg1.png")
+    resized4=image_data4.resize((70,70))
+    photo4=ImageTk.PhotoImage(resized4)
+    img_label4=tk.Label(f4,image=photo4,bg="light grey")
+    img_label4.image=photo4
+    img_label4.pack(side=tk.LEFT,padx=10)
+
+    text4=tk.Label(f4,text="Leg Raises\n\n3 sets- 10-15 reps .modrate-weight\n targets front legs muscles best exercise of legs ever also train abdominal muscle also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text4.pack(side=tk.LEFT,padx=10)
 
 
+    f5=tk.Frame(main_frame,bg="light gray",height=80,pady=5)
+    f5.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data5=Image.open("legs2.png")
+    resized5=image_data5.resize((70,70))
+    photo5=ImageTk.PhotoImage(resized5)
+    img_label5=tk.Label(f5,image=photo5,bg="light grey")
+    img_label5.image=photo5
+    img_label5.pack(side=tk.LEFT,padx=10)
 
+    text5=tk.Label(f5,text="barbell extensions\n\n3 sets- 10-12 reps Heavy weight\n targets gluites muscle of legs also for cabs and slightly trains lower back also",font="arial 11",bg="light gray",fg="black",justify="left")
+    text5.pack(side=tk.LEFT,padx=10)
+
+
+    f6=tk.Frame(main_frame,bg="light gray",height=90,pady=5)
+    f6.pack(fill=tk.BOTH,pady=5,padx=5)
+    image_data6=Image.open("leg3.png")
+    resized6=image_data6.resize((70,70))
+    photo6=ImageTk.PhotoImage(resized6)
+    img_label6=tk.Label(f6,image=photo6,bg="light grey")
+    img_label6.image=photo6
+    img_label6.pack(side=tk.LEFT,padx=10)
+
+    text6=tk.Label(f6,text="sumo squats\n\n3 sets- 10-12 reps bodyweight\n targets internal muscles of legs, full dominating exercise for legs",font="arial 11",bg="light gray",fg="black",justify="left")
+    text6.pack(side=tk.LEFT,padx=10)
 
 
 sign_up_window()
