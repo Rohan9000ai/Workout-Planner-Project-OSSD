@@ -19,10 +19,7 @@ cursor.execute(create_table)
 conn.commit()
 conn.close()
 
-root=tk.Tk()
-root.geometry("700x700")
-root.maxsize(700,700)
-root.title("Sign Up Form")
+
 
 def login():
     global email_entry,password_entry,currunt_height,currunt_weight,currunt_name,currunt_age,age_entry
@@ -55,12 +52,16 @@ def sign_up():
     if email_entry_input.get()=="" or password_entry_input.get()=="" or h_entry.get()=="" or w_entry.get()==""or name_entry_k.get()=="":
         messagebox.showerror("Error","Please Enter all fields")
         return
+    elif len(password_entry_input.get())<8:
+        messagebox.showerror("Error","Please Enter 8 digits password")
+        return
 
     e=email_entry_input.get()
     p=password_entry_input.get()
     h=h_entry.get()
     w=w_entry.get()
     n=name_entry_k.get()
+
     conn=sqlite3.connect("user.db")
     cursor=conn.cursor()
     insert="insert into users(email,password,height,weight,name) values(?,?,?,?,?)"
@@ -77,6 +78,9 @@ def login_window():
     for widget in root.winfo_children():
         widget.destroy()
 
+    root.title("Login Form")
+    root.maxsize(700,700)
+    root.minsize(699,699)
     f=tk.Frame(root,width=600,height=600,bg="dark blue")
     f.pack(fill=tk.BOTH)
     opened_img = Image.open("dumbell.png")
@@ -90,7 +94,6 @@ def login_window():
     des=tk.Label(f,text="Login to countinue your journey",font="arial 10",bg="dark blue",fg="white")
     des.pack(pady=10)
 
-    root.title("Login Form")
     f1=tk.Frame(root,width=400,height=480,bg="white")
     f1.pack(fill=tk.BOTH,expand=True)
     email=tk.Label(f1,text="Email Address:",font="arial 11 bold",bg="white")
@@ -118,6 +121,9 @@ def sign_up_window():
     global email_entry_input,password_entry_input,h_entry,w_entry,name_entry_k
     for widget in root.winfo_children():
         widget.destroy()
+    
+    root.title("Sign Up Form")
+    root.maxsize(700,700)
 
     f=tk.Frame(root,width=600,height=600,bg="dark blue")
     f.pack(fill=tk.BOTH)
@@ -134,7 +140,7 @@ def sign_up_window():
     f1=tk.Frame(root,width=400,height=480,bg="white")
     f1.pack(fill=tk.BOTH)
 
-    root.title("Sign Up Form")
+    
     name=tk.Label(f1,text="Full Name:",font="arial 11 bold",bg="white")
     name.grid(row=0,column=0,pady=5,padx=10)
     name_entry_k=tk.Entry(f1,font="arial 15",bg="light gray",borderwidth=4,width=30,justify="center")
@@ -171,11 +177,15 @@ def main_window():
     h=currunt_height
     w=currunt_weight
     ag=currunt_age
+    hi=h/100
+    hie=hi*hi
+    bmi=w/hie
     for widgets in root.winfo_children():
         widgets.destroy()
 
     root.title("main window")
     root.maxsize(900, 600)
+    root.minsize(899,599)
     f=tk.Frame(root,width=400,height=20,bg="light gray")
     f.pack(fill=tk.BOTH,side=tk.TOP)
     out=tk.Button(f,text="Logout",font="arial 10",bg="light gray",fg="red",width=10,pady=5,command=login_window)
@@ -185,14 +195,25 @@ def main_window():
     tk.Label(f,text="Fitness App",font="arial 15 bold",bg="light gray",fg="black").pack(side=tk.LEFT,padx=10)
     f1=tk.Frame(root,width=700,height=300,bg="white")
     f1.pack(fill=tk.BOTH)
-    tk.Label(f1,text=f"hey {n}",font="arial 20 bold",bg="white",fg="black",width=10,pady=7).pack(pady=10,side=tk.TOP)
-
-    f2=tk.Frame(f1,width=100,height=30,bg="gray95")
+    edit=tk.Label(f1,text="",font="arial 15 bold",bg="white",fg="black",width=20,pady=9)
+    edit.pack(side=tk.LEFT,anchor="nw",pady=10)
+    tk.Label(f1,text=f"hey {n}",font="arial 20 bold",bg="white",fg="black",width=12,pady=7).pack(side=tk.LEFT,pady=10,padx=140)
+    fra=tk.Frame(root,width=700,height=300,bg="white")
+    fra.pack(fill=tk.BOTH)
+    if bmi<18.5:
+        edit.config(text=str("You are: Underweight"))
+    elif bmi<25:
+        edit.config(text=str("You are: Normal Weight"))
+    elif bmi<30:
+        edit.config(text=str("You are: Over weight"))
+    else:
+        edit.config(text=str("You are: Obese"))
+    f2=tk.Frame(fra,width=100,height=30,bg="gray95")
     f2.pack(pady=7,side=tk.LEFT,padx=10)
     tk.Label(f2,text="Height:",font="arial 8",bg="gray95",fg="black",width=70,pady=5).grid(row=0,column=0)
     tk.Label(f2,text=f"{h} cm",font="arial 15",bg="gray95",fg="black").grid(row=1,column=0)
 
-    f3=tk.Frame(f1,width=100,height=30,bg="gray95")
+    f3=tk.Frame(fra,width=100,height=30,bg="gray95")
     f3.pack(pady=7,side=tk.LEFT,padx=18)
     tk.Label(f3,text="Weight:",font="arial 8",bg="gray95",fg="black",width=70,pady=5).grid(row=0,column=0)
     tk.Label(f3,text=f"{w} kg",font="arial 15",bg="gray95",fg="black").grid(row=1,column=0)
@@ -204,13 +225,34 @@ def main_window():
     tk.Label(f5,text="Age:",font="arial 8",bg="gray95",fg="black",width=170,pady=5).grid(row=0,column=0)
     tk.Label(f5,text=f"{ag} yrs",font="arial 15",bg="gray95",fg="black").grid(row=1,column=0)
 
-    #add scrapped data here
+    f6=tk.Frame(root,width=100,height=30,bg="white")
+    f6.pack(fill=tk.BOTH,expand=True)
+    
+    bm=tk.Label(f6,text=f"your BMI is : ",font="arial 15",bg="gray95",fg="black",width=40,pady=24)
+    bm.pack(side=tk.LEFT,anchor="nw")
+    bme=tk.Label(f6,text=f"{bmi} ",font="arial 25",bg="gray95",fg="black",width=70,pady=17)
+    bme.pack(side=tk.LEFT,anchor="nw")
 
-    f6=tk.Frame(root,width=100,height=50,bg="white")
-    f6.pack(fill=tk.BOTH,side=tk.BOTTOM)
-    fat_lose=tk.Button(f6,text="Fat Loss\n Cardio & burn exersices",font="arial 13",bg="lightblue1",fg="blue4",width=40,pady=50,padx=10,command=fat_loss_window,anchor="w",justify="left")
+    fr1=tk.Frame(root,width=100,height=100,bg="white")
+    fr1.pack(fill=tk.BOTH,expand=True)
+    fr2=tk.Frame(fr1,width=40,bg="white")
+    fr2.pack(side=tk.LEFT,anchor="nw",padx=5,pady=7)
+    tk.Label(fr2,text="Below 18.5\n\nUnderweight",font="arial 15",pady=20,padx=50).pack()
+    fr3=tk.Frame(fr1,width=20,height=30,bg="white")
+    fr3.pack(side=tk.LEFT,anchor="nw",padx=5,pady=7)
+    tk.Label(fr3,text="18.5-24.9\n\nNormal weight",font="arial 15",pady=20,padx=50).pack()
+    fr4=tk.Frame(fr1,width=20,height=30,bg="white")
+    fr4.pack(side=tk.LEFT,anchor="nw",padx=5,pady=7)
+    tk.Label(fr4,text="25.0-29.9\n\nOver weight",font="arial 15",pady=20,padx=50).pack()
+    fr5=tk.Frame(fr1,width=20,height=30,bg="white")
+    fr5.pack(side=tk.LEFT,anchor="nw",padx=5,pady=7)
+    tk.Label(fr5,text="30.0 and Above\n\nObese",font="arial 15",pady=20,padx=60).pack()
+
+    f7=tk.Frame(root,width=100,height=50,bg="white")
+    f7.pack(fill=tk.BOTH,side=tk.BOTTOM)
+    fat_lose=tk.Button(f7,text="Fat Loss\n Cardio & burn exersices",font="arial 13",bg="lightblue1",fg="blue4",width=40,pady=50,padx=10,command=fat_loss_window,anchor="w",justify="left")
     fat_lose.pack(pady=10,side=tk.LEFT,padx=30)
-    muscle_gain=tk.Button(f6,text="Muscle Gain\n Strength & resistance exercises",font="arial 13",bg="aquamarine1",fg="dark green",width=50,pady=50,padx=10,command=muscle_gain_window,anchor="w",justify="left")
+    muscle_gain=tk.Button(f7,text="Muscle Gain\n Strength & resistance exercises",font="arial 13",bg="aquamarine1",fg="dark green",width=50,pady=50,padx=10,command=muscle_gain_window,anchor="w",justify="left")
     muscle_gain.pack(pady=10,side=tk.LEFT,padx=30)
 
 
@@ -219,6 +261,12 @@ def feedback_window():
          widgets.destroy()
     root.title("Give your Feedback")
     root.maxsize(900,600)
+
+    f=tk.Frame(root,width=400,height=40,bg="white",pady=20)
+    f.pack(fill=tk.BOTH,side=tk.TOP)
+    back_btn=tk.Button(f,text="<-- back to main menu",font="arial 10 bold",bg="dark blue",fg="white",command=main_window,pady=10)
+    back_btn.pack(side=tk.LEFT,padx=10)
+
     f1 = tk.Frame(root, width=600, height=400, bg="white")
     f1.pack(fill=tk.BOTH, expand=True)
     header = tk.Frame(f1, bg="#1a1a6e", width=600)
@@ -277,6 +325,12 @@ def fat_loss_window():
         widgets.destroy()
     root.title("Fat loss window")
     root.maxsize(900, 600)
+
+    f=tk.Frame(root,width=400,height=40,bg="white",pady=20)
+    f.pack(fill=tk.BOTH,side=tk.TOP)
+    back_btn=tk.Button(f,text="<-- back to main menu",font="arial 10 bold",bg="dark blue",fg="white",command=main_window,pady=10)
+    back_btn.pack(side=tk.LEFT,padx=10)
+
     frame1 = tk.Frame(root,width=400, height=400 , bg="white" , bd=1)
     frame1.pack(fill=tk.BOTH, expand=True)
 
@@ -398,15 +452,15 @@ def muscle_gain_window():
     tk.Label(f,text="Strength Training",font="arial 15",bg="white",fg="black").pack(side=tk.LEFT,padx=10)
     f1=tk.Frame(root,width=700,height=300,bg="white")
     f1.pack(fill=tk.BOTH,expand=True)
-    title_frame=tk.Frame(f1,width=100,height=100,bg="lightblue1",borderwidth=2,pady=40)
+    title_frame=tk.Frame(f1,width=100,height=100,bg="lightblue1",borderwidth=2,pady=20)
     title_frame.pack(side=tk.TOP,fill=tk.BOTH)
     img_data = Image.open("dumbell.png")
-    resized = img_data.resize((80, 80))
+    resized = img_data.resize((120, 100))
     photo = ImageTk.PhotoImage(resized)
     img_label = tk.Label(title_frame, image=photo, bg="lightblue1")
     img_label.image = photo
-    img_label.pack(side=tk.LEFT, padx=20, pady=7)
-    text_label = tk.Label(title_frame,text="Choose your muscle group\nSelect a muscle - we'll show you the best exercises for it!",font="arial 13",bg="lightblue1",fg="blue4",justify="left")
+    img_label.pack(side=tk.LEFT, padx=20, pady=5)
+    text_label = tk.Label(title_frame,text="Choose your muscle group\n\nSelect a muscle - we'll show you the best exercises for it!",font="arial 13",bg="lightblue1",fg="blue4",justify="left")
     text_label.pack(side=tk.LEFT, pady=5, padx=10, anchor="w")
     main_frame=tk.Frame(f1,width=700,height=500,bg="white")
     main_frame.pack(side=tk.TOP,fill=tk.BOTH,expand=True,padx=20,pady=10)
@@ -694,6 +748,7 @@ def abs_window():
     image_data6=Image.open("lowerabs.png")
     resized6=image_data6.resize((70,70))
     photo6=ImageTk.PhotoImage(resized6)
+
     img_label6=tk.Label(f6,image=photo6,bg="light grey")
     img_label6.image=photo6
     img_label6.pack(side=tk.LEFT,padx=10)
@@ -704,6 +759,7 @@ def abs_window():
 def arms_window():
     for widgets in root.winfo_children():
         widgets.destroy()
+
     root.title("Arms muscle")
     root.maxsize(900, 600)
     f=tk.Frame(root,width=400,bg="white")
@@ -971,7 +1027,10 @@ def legs_window():
     text6=tk.Label(f6,text="sumo squats\n\n3 sets- 10-12 reps bodyweight\n targets internal muscles of legs, full dominating exercise for legs",font="arial 11",bg="light gray",fg="black",justify="left")
     text6.pack(side=tk.LEFT,padx=10)
 
-
+root=tk.Tk()
+root.geometry("700x700")
+root.maxsize(700,700)
+root.title("Sign Up Form")
 sign_up_window()
 
 root.mainloop()   
