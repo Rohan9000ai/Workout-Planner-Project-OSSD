@@ -218,6 +218,8 @@ def feedback_window():
     label1.pack(pady=18)
     sub = tk.Label(header, text="give your nobal thoughts!", font=("Arial", 9), bg="#1a1a6e", fg="#a0a8d0")
     sub.pack(pady=(0, 15))
+    btn = tk.Button(header,text="go back", command=main_window , font=('Arial',11,'bold'),background='#00FF00',fg='#1a1a6e')
+    btn.pack(side='left',padx=10,pady=(0,10))
     inner = tk.Frame(f1, bg="white")
     inner.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
     tk.Label(inner, text="Category", font=("Arial", 9, "bold"), bg="white", fg="#555").grid(row=0, column=0, sticky="w", pady=(5,2))
@@ -268,14 +270,20 @@ def fat_loss_window():
         widgets.destroy()
     root.title("Fat loss window")
     root.maxsize(900, 600)
+    top_bar = tk.Frame(root, bg="white")
+    top_bar.pack(fill=tk.X, side=tk.TOP)
+    btn = tk.Button(top_bar, text="<-- go back", command=main_window,
+                     font=('Arial', 11, 'bold'), background='#00FF00', fg='#1a1a6e')
+    btn.pack(side='left', padx=10, pady=6)
     frame1 = tk.Frame(root,width=400, height=400 , bg="white" , bd=1)
     frame1.pack(fill=tk.BOTH, expand=True)
 
     label1 = tk.Label(frame1, text="Fat Loss-gym_workout_planner", font=("Arial",14,"bold") , width=400)
     label1.pack(pady=5,padx=5)
+    
     label2= tk.Label(frame1,text="Today's session:", font=("Arial",11,"bold"), bg="white")
     label2.pack(pady=(10,4),padx=20, anchor="w")
-
+    
     par_label=tk.Frame(frame1,width=400,bg="white")
     par_label.pack(fill=tk.X, padx=10,pady=10)
     for i in range(3):
